@@ -121,6 +121,10 @@ namespace ConsoleUI
                           "{person_id} - integer\n" +
                           "{meeting_id} - integer\n");
 
+                        Console.WriteLine("\"FILTER meetings\"" +
+                         "\n" +
+                         "Prompts to add a filter to show meetings\n");
+
                         Console.ForegroundColor = ConsoleColor.White;
                         continue;
                     }
@@ -133,6 +137,75 @@ namespace ConsoleUI
                             Console.WriteLine("Add operand with meeting id: DELETE meeting {id}");
                             Console.WriteLine("Aborting command");
                             Console.ForegroundColor = ConsoleColor.White;
+                            continue;
+                        }
+                        if (tokens[0].ToLower() == "filter"
+                            && tokens[1].ToLower() == "meetings")
+                        {
+                            var tempMeetings = meetings;
+                            // Filtering loop
+                            while (true)
+                            {
+                                Console.WriteLine("Select a filter: (Description," +
+                                    " resp.person, category, type, from," +
+                                    " to, beetween, peopleCount)");
+                                var filter = Console.ReadLine();
+                                if(filter.ToLower() == "description" || filter.ToLower() == "desc")
+                                {
+                                    Console.WriteLine("Add description filter:");
+                                }
+                                else if (filter.ToLower() == "responsible person")
+                                {
+                                    Console.WriteLine("enter the id of responsible person");
+                                }
+                                else if (filter.ToLower() == "category")
+                                {
+                                    Console.WriteLine("enter a category (CodeMonkey / Hub / Short / TeamBuilding):");
+                                }
+                                else if (filter.ToLower() == "type")
+                                {
+                                    Console.WriteLine("enter a type (Live / InPerson)");
+                                }
+                                else if(filter.ToLower() == "from")
+                                {
+                                    Console.WriteLine("Enter a date:");
+                                }
+                                else if (filter.ToLower() == "to")
+                                {
+                                    Console.WriteLine("Enter a date:");
+                                }
+                                else if (filter.ToLower() == "between") { 
+                                    Console.WriteLine("Enter a starting date:");
+                                    Console.WriteLine("Enter an ending date:");
+                                }
+                                else if (filter.ToLower() == "peoplecount" || filter.ToLower() == "count")
+                                {
+                                    Console.WriteLine("Enter a number from which to filter: ");
+                                }else
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+                                    Console.WriteLine("Please enter a valid filter");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                }
+
+                                Console.WriteLine();
+                                Console.WriteLine("data");
+                                Console.WriteLine();
+
+                                Console.WriteLine("Would you like to add a new filter? (Y/N)");
+                                var response = Console.ReadLine();
+                                if(response == null)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Aborting command");
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    continue;
+                                }
+                                else if(response.ToLower() is not "y" or not "yes")
+                                {
+                                    break;
+                                }
+                            }
                             continue;
                         }
                     }

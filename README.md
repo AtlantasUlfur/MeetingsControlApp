@@ -57,3 +57,9 @@ Input parameters:
 `meeting_id` - integer
 
 Removes person from a meeting
+
+```http request
+[DELETE/REMOVE] person {person_id} FROM meeting {meeting_id}
+```
+
+Prompts to add a filter to show meetings
