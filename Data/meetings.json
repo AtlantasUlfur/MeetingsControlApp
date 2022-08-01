@@ -1,0 +1,107 @@
+[
+  {
+    "ID": 0,
+    "Name": "name1",
+    "ResponsiblePerson": {
+      "Id": 0,
+      "Name": "name1",
+      "Surname": "surname1",
+      "username": "username1",
+      "password": "7EXazJ1yHp+l1DIOxMelDbn636o=",
+      "salt": "tVRvT8Jqrxc=",
+      "iterations": "AAAAFA=="
+    },
+    "Description": "description",
+    "Category": 1,
+    "Type": 0,
+    "People": [
+      {
+        "Id": 0,
+        "Name": "name1",
+        "Surname": "surname1",
+        "username": "username1",
+        "password": "7EXazJ1yHp+l1DIOxMelDbn636o=",
+        "salt": "tVRvT8Jqrxc=",
+        "iterations": "AAAAFA=="
+      },
+      {
+        "Id": 1,
+        "Name": "name2",
+        "Surname": "surname2",
+        "username": "username2",
+        "password": "IcpONxXdhCb/j/LFYFU2rHPTi8E=",
+        "salt": "rhZwpa2c30c=",
+        "iterations": "AAAAFA=="
+      },
+      {
+        "Id": 2,
+        "Name": "name3",
+        "Surname": "surname3",
+        "username": "username3",
+        "password": "JEOzXoXErISNeiKapIYIFxp0izY=",
+        "salt": "gIAxNAuzNyI=",
+        "iterations": "AAAAFA=="
+      }
+    ],
+    "StartDate": "2022-02-02T00:00:00",
+    "EndDate": "2022-02-02T12:00:00"
+  },
+  {
+    "ID": 1,
+    "Name": "name2",
+    "ResponsiblePerson": {
+      "Id": 1,
+      "Name": "name2",
+      "Surname": "surname2",
+      "username": "username2",
+      "password": "IcpONxXdhCb/j/LFYFU2rHPTi8E=",
+      "salt": "rhZwpa2c30c=",
+      "iterations": "AAAAFA=="
+    },
+    "Description": "jono .net meetas",
+    "Category": 2,
+    "Type": 1,
+    "People": [
+      {
+        "Id": 1,
+        "Name": "name2",
+        "Surname": "surname2",
+        "username": "username2",
+        "password": "IcpONxXdhCb/j/LFYFU2rHPTi8E=",
+        "salt": "rhZwpa2c30c=",
+        "iterations": "AAAAFA=="
+      }
+    ],
+    "StartDate": "2022-03-03T00:00:00",
+    "EndDate": "2022-03-03T12:00:00"
+  },
+  {
+    "ID": 2,
+    "Name": "name3",
+    "ResponsiblePerson": {
+      "Id": 2,
+      "Name": "name3",
+      "Surname": "surname3",
+      "username": "username3",
+      "password": "JEOzXoXErISNeiKapIYIFxp0izY=",
+      "salt": "gIAxNAuzNyI=",
+      "iterations": "AAAAFA=="
+    },
+    "Description": "petro .net meetas",
+    "Category": 1,
+    "Type": 0,
+    "People": [
+      {
+        "Id": 2,
+        "Name": "name3",
+        "Surname": "surname3",
+        "username": "username3",
+        "password": "JEOzXoXErISNeiKapIYIFxp0izY=",
+        "salt": "gIAxNAuzNyI=",
+        "iterations": "AAAAFA=="
+      }
+    ],
+    "StartDate": "2022-03-03T00:00:00",
+    "EndDate": "2022-03-03T06:00:00"
+  }
+]
