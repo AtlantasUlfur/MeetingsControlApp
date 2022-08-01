@@ -9,6 +9,10 @@ set "People_file" and "Meetings_file" in appsettings.json file to existing .json
 
 compile and run the program
 
+Test User:
+username: root
+password: root
+
 ### Available commands
 
 ```http request
