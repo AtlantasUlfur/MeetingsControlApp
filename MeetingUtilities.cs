@@ -10,7 +10,7 @@ namespace ConsoleUI
 {
     internal static class MeetingUtilities
     {
-        public static List<Meeting> getAllMeetings(string path)
+        public static List<Meeting> GetAllMeetings(string path)
         {
             try
             {
@@ -32,13 +32,13 @@ namespace ConsoleUI
         {
             return meetings.FindIndex(x => x.ID == id);
         }
-        public static bool userCanDeleteMeeting(List<Meeting> meetings, int index, Person user)
+        public static bool UserCanDeleteMeeting(List<Meeting> meetings, int index, Person user)
         {
             return meetings[index].ResponsiblePerson.Id == user.Id;
         }
-        public static bool deleteMeeting(List<Meeting> meetings, string path, int index)
+        public static bool DeleteMeeting(List<Meeting> meetings, string path, int index)
         {
-            if(index < -1 || index >= meetings.Count())
+            if(index < -1 || index >= meetings.Count)
             {
                 return false;
             }else
@@ -48,7 +48,7 @@ namespace ConsoleUI
                 return true;
             }
         }
-        public static bool createMeeting(List<Person> people, List<Meeting> meetings,string path)
+        public static bool CreateMeeting(List<Person> people, List<Meeting> meetings,string path)
         {
             // Get the name of the meeting
             Console.WriteLine("Enter name of the meeting:");
@@ -56,16 +56,16 @@ namespace ConsoleUI
 
             // Get and check if the responsible person exists and is unambigious
             Console.WriteLine("Enter the name or id of the person responsible for the meeting:");
-            var found_people = PersonUtilities.findPerson(people, Console.ReadLine());
+            var found_people = PersonUtilities.FindPerson(people, Console.ReadLine());
             if(found_people == null)
             {
                 Console.WriteLine("Person not found");
                 return false;
-            }else if(found_people.Count() == 0)
+            }else if(found_people.Count == 0)
             {
                 Console.WriteLine("Person not found");
                 return false;
-            }else if(found_people.Count() > 1)
+            }else if(found_people.Count > 1)
             {
                 Console.WriteLine("Responsible person is ambigious, multiple poeple found, try using id instead.");
                 Console.WriteLine("People found:");
@@ -85,9 +85,8 @@ namespace ConsoleUI
 
             //Get teh category of the meeting
             Console.WriteLine("Enter the Category of the meeting (CodeMonkey / Hub / Short / TeamBuilding):");
-            Category category;
 
-            if (!Enum.TryParse<Category>( Console.ReadLine(),true, out category))
+            if (!Enum.TryParse<Category>(Console.ReadLine(), true, out Category category))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Enter a valid category");
@@ -98,9 +97,8 @@ namespace ConsoleUI
 
             //Get the Type of the meeting
             Console.WriteLine("Enter the type of the meeting (Live / InPerson):");
-            VismaEntry.Type type;
 
-            if (!Enum.TryParse<VismaEntry.Type>(Console.ReadLine(), true, out type))
+            if (!Enum.TryParse<VismaEntry.Type>(Console.ReadLine(), true, out VismaEntry.Type type))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Enter a valid type");
@@ -110,8 +108,7 @@ namespace ConsoleUI
             }
 
             Console.WriteLine("Enter the start time of the meeting:");
-            DateTime startTime;
-            if (!DateTime.TryParse(Console.ReadLine(), out startTime))
+            if (!DateTime.TryParse(Console.ReadLine(), out DateTime startTime))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Enter a valid starting time");
@@ -207,7 +204,7 @@ namespace ConsoleUI
         {
             return meetings.Where(x => x.ID == id).First();
         }
-        public static bool AddPersonToAMeeting(Meeting meeting, Person person, string meetingsPath)
+        public static bool AddPersonToAMeeting(Meeting meeting, Person person)
         {
             try
             {

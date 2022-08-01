@@ -39,23 +39,23 @@ namespace VismaEntry
             People = new List<Person>();
             StartDate = startDate;
             EndDate = endDate;
-            ID = generateID();
-            addPerson(responsiblePesron);
+            ID = GenerateID();
+            AddPerson(responsiblePesron);
         }
-        private int generateID()
+        private static int GenerateID()
         {
             return Interlocked.Increment(ref lastId);
         }
-        public void SetLastID(int id)
+        public static void SetLastID(int id)
         {
             lastId = id;
         }
-        public void addPerson(Person person)
+        public void AddPerson(Person person)
         {
             People.Add(person);
             return;
         }
-        public void removePerson(Person person)
+        public void RemovePerson(Person person)
         {
             var id = People.FindIndex(x => x.Id == person.Id);
             if (id != -1)

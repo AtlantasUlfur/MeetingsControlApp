@@ -29,11 +29,11 @@ namespace ConsoleUI
                 Console.WriteLine("Enter your password");
                 var password = Console.ReadLine();
 
-                var passwordMatches = PersonUtilities.checkPassword(people, username, password);
+                var passwordMatches = PersonUtilities.CheckPassword(people, username, password);
 
                 if (passwordMatches)
                 {
-                    LoginPerson = PersonUtilities.getPersonByUsername(people, username);
+                    LoginPerson = PersonUtilities.GetPersonByUsername(people, username);
                     break;
                 }
                 else
@@ -53,10 +53,10 @@ namespace ConsoleUI
 
             // Load all people into a list
             Person LoginPerson;
-            var people = PersonUtilities.getAllPeople(PEOPLEPATH);
+            var people = PersonUtilities.GetAllPeople(PEOPLEPATH);
             log.LogInformation("All registered people have been loaded");
             // Load all meetings into a list
-            var meetings = MeetingUtilities.getAllMeetings(MEETINGSPATH);
+            var meetings = MeetingUtilities.GetAllMeetings(MEETINGSPATH);
             log.LogInformation("All registered meetings have been loaded");
 
             //Login or register prompt
@@ -253,7 +253,7 @@ namespace ConsoleUI
                                     }
                                     else
                                     {
-                                        if (PersonUtilities.findPerson(people, responsible_person_id) == null)
+                                        if (PersonUtilities.FindPerson(people, responsible_person_id) == null)
                                         {
                                             Console.ForegroundColor = ConsoleColor.Yellow;
                                             Console.WriteLine("person with id: {0} doesn't exist", responsible_person_id);
@@ -410,7 +410,7 @@ namespace ConsoleUI
                             && tokens[1].ToLower() == "new"
                             && tokens[2].ToLower() == "meeting")
                         {
-                            if (MeetingUtilities.createMeeting(people, meetings, MEETINGSPATH))
+                            if (MeetingUtilities.CreateMeeting(people, meetings, MEETINGSPATH))
                             {
                                 log.LogInformation("A new meeting has been created");
                             }
@@ -461,7 +461,7 @@ namespace ConsoleUI
                                 Console.ForegroundColor = ConsoleColor.White;
                                 continue;
                             }
-                            if (!MeetingUtilities.userCanDeleteMeeting(meetings, index, LoginPerson))
+                            if (!MeetingUtilities.UserCanDeleteMeeting(meetings, index, LoginPerson))
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("User {0} does not have permissions to delete meeting with index {1}",LoginPerson.Username,id);
@@ -469,7 +469,7 @@ namespace ConsoleUI
                                 Console.ForegroundColor = ConsoleColor.White;
                                 continue;
                             }
-                            if(MeetingUtilities.deleteMeeting(meetings, MEETINGSPATH, id))
+                            if(MeetingUtilities.DeleteMeeting(meetings, MEETINGSPATH, id))
                             {
                                 log.LogInformation("Meeting with id: {meeting_id} has been deleted sucessfully", id);
                             }
@@ -503,7 +503,7 @@ namespace ConsoleUI
                                 Console.ForegroundColor = ConsoleColor.White;
                                 continue;
                             }
-                            if (!PersonUtilities.personExists(people, personId))
+                            if (!PersonUtilities.PersonExists(people, personId))
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("Person with id: {0} doesn't exist", personId);
@@ -520,7 +520,7 @@ namespace ConsoleUI
                                 continue;
                             }
                             var meeting = MeetingUtilities.GetMeeting(meetings, meetingId);
-                            var person = PersonUtilities.findPerson(people, personId);
+                            var person = PersonUtilities.FindPerson(people, personId);
                             if (!MeetingUtilities.PersonIsAlreadyInAMeeting(meeting, person))
                             {
 
@@ -585,7 +585,7 @@ namespace ConsoleUI
                                 Console.ForegroundColor = ConsoleColor.White;
                                 continue;
                             }
-                            if (!PersonUtilities.personExists(people, personId))
+                            if (!PersonUtilities.PersonExists(people, personId))
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("Person with id: {0} doesn't exist", personId);
@@ -602,7 +602,7 @@ namespace ConsoleUI
                                 continue;
                             }
                             var meeting = MeetingUtilities.GetMeeting(meetings, meetingId);
-                            var person = PersonUtilities.findPerson(people, personId);
+                            var person = PersonUtilities.FindPerson(people, personId);
                             if (MeetingUtilities.PersonIsAlreadyInAMeeting(meeting, person))
                             {
 
@@ -629,7 +629,7 @@ namespace ConsoleUI
                                 }
                             }
 
-                            if (MeetingUtilities.AddPersonToAMeeting(meeting, person,MEETINGSPATH))
+                            if (MeetingUtilities.AddPersonToAMeeting(meeting, person))
                             {
                                 log.LogInformation("Person with id {person_id} has been added to a meeting with id {meeting_id}",
                                     personId, meetingId);

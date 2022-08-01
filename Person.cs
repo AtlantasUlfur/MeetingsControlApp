@@ -49,7 +49,7 @@ namespace VismaEntry
             Id = GenerateID();
             this.Username = username;
 
-            var dict = PersonUtilities.encryptPassword(password);
+            var dict = PersonUtilities.EncryptPassword(password);
             this.Password = dict["password"];
             this.Salt = dict["salt"];
             this.Iterations = dict["iterations"];
