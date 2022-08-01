@@ -40,9 +40,12 @@ namespace ConsoleUI
             // logic loop
             while (true)
             {
+                // ask for command input
                 Console.Write(LoginPerson.Username+"> ");
                 var input = Console.ReadLine();
 
+
+                // check if the command matches any known commands
                 if (input == null)
                 {
                     continue;
@@ -54,251 +57,46 @@ namespace ConsoleUI
                 }
                 else
                 {
+                    // split the input into tokens
                     var tokens = input.Split(" ");
 
-                    /*foreach(var token in tokens)
-                    {
-                        Console.WriteLine(token);
-                    }*/
-
-                    // Listing all available commands
+                    // check for help command
                     if (tokens.Length == 1 &&
                             (tokens[0].ToLower() == "-h"
                             || tokens[0].ToLower() == "help"
                             || tokens[0].ToLower() == "-help")
                     )
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("All available Commands: ");
-                        Console.WriteLine("\n\"GET * people\"" +
-                            "\n" +
-                            "Returns All people registered in database \n");
-
-                        Console.WriteLine("\"GET * meetings\""+
-                            "\n" +
-                            "Returns All meetings fom the database \n");
-
-                        Console.WriteLine("\"[CREATE\\ADD] new meeting\"" +
-                           "\n" +
-                           "Will promt you to input information to create a new meeting \n");
-
-                        Console.WriteLine("\"DELETE meeting {id}\"" +
-                           "\n" +
-                           "Deletes a meeting with a given id from database\n" +
-                           "{id} - integer\n");
-
-
-                        Console.WriteLine("\"ADD person {person_id} TO meeting {meeting_id}\"" +
-                           "\n" +
-                           "Deletes a meeting with a given id from database\n" +
-                           "{person_id} - integer\n" +
-                           "{meeting_id} - integer\n");
-
-                        Console.WriteLine("\"[DELETE/REMOVE] person {person_id} FROM meeting {meeting_id}\"" +
-                          "\n" +
-                          "Deletes a meeting with a given id from database\n" +
-                          "{person_id} - integer\n" +
-                          "{meeting_id} - integer\n");
-
-                        Console.WriteLine("\"FILTER meetings\"" +
-                         "\n" +
-                         "Prompts to add a filter to show meetings\n");
-
-                        Console.ForegroundColor = ConsoleColor.White;
+                        CommandUtilities.RunHelpCommand();
                         continue;
                     }
+                    
                     else if (tokens.Length == 2)
                     {
+                        // check for incorrect delete meeting command
                         if (tokens[0].ToLower() == "delete"
                             && tokens[1].ToLower() == "meeting")
                         {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Add operand with meeting id: DELETE meeting {id}");
-                            Console.WriteLine("Aborting command");
-                            Console.ForegroundColor = ConsoleColor.White;
+                            ConsoleUtilities.PrintWarningToConsole(new string[2]
+                            {
+                                "Add operand with meeting id: DELETE meeting {id}",
+                                "Aborting command"
+                            });
                             continue;
                         }
+                        // check for filter meetings command
                         if (tokens[0].ToLower() == "filter"
                             && tokens[1].ToLower() == "meetings")
                         {
-                            var tempMeetings = meetings;
-                            // Filtering loop
-                            while (true)
-                            {
-                                Console.WriteLine("Select a filter: (Description," +
-                                    " resp.person, category, type, from," +
-                                    " to, beetween, peopleCount)");
-                                var filter = Console.ReadLine();
-                                if(filter.ToLower() == "description" || filter.ToLower() == "desc")
-                                {
-                                    Console.WriteLine("Add description filter:");
-                                    var description_filter = Console.ReadLine();
-                                    tempMeetings = tempMeetings.Where(x => x.Description.Contains(description_filter)).ToList();
-                                }
-                                else if (filter.ToLower() == "responsible person" || filter.ToLower() == "resp.person")
-                                {
-                                    Console.WriteLine("enter the id of responsible person");
-                                    if (!Int32.TryParse(Console.ReadLine(), out int responsible_person_id))
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.Yellow;
-                                        Console.WriteLine("id should be an integer!");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        continue;
-                                    }
-                                    else
-                                    {
-                                        if (PersonUtilities.FindPerson(people, responsible_person_id) == null)
-                                        {
-                                            Console.ForegroundColor = ConsoleColor.Yellow;
-                                            Console.WriteLine("person with id: {0} doesn't exist", responsible_person_id);
-                                            Console.ForegroundColor = ConsoleColor.White;
-                                            continue;
-                                        }
-                                        else
-                                        {
-                                            tempMeetings = tempMeetings.Where(x => x.ResponsiblePerson.Id == responsible_person_id).ToList();
-                                        }
-                                    }
-                                }
-                                else if (filter.ToLower() == "category")
-                                {
-                                    Console.WriteLine("enter a category (CodeMonkey / Hub / Short / TeamBuilding):");
-                                    
-                                    if (!Enum.TryParse<Category>(Console.ReadLine(), true, out Category category))
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.Yellow;
-                                        Console.WriteLine("Enter a valid category");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                    }else
-                                    {
-                                        tempMeetings = tempMeetings.Where(x => x.Category == category).ToList();
-                                    }
 
-                                }
-                                else if (filter.ToLower() == "type")
-                                {
-                                    Console.WriteLine("enter a type (Live / InPerson):");
-                                    if (!Enum.TryParse<VismaEntry.Type>(Console.ReadLine(), true, out VismaEntry.Type type))
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.Yellow;
-                                        Console.WriteLine("Enter a valid type");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        continue;
-                                    }
-                                    else
-                                    {
-                                        tempMeetings = tempMeetings.Where(x => x.Type == type).ToList();
-                                    }
-                                }
-                                else if(filter.ToLower() == "from")
-                                {
-                                    Console.WriteLine("Enter a date:");
-                                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime startTime))
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.Yellow;
-                                        Console.WriteLine("Enter a valid starting time");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        continue;
-                                    }else
-                                    {
-                                        tempMeetings = tempMeetings.Where(x => x.StartDate > startTime).ToList();
-                                    }
-                                }
-                                else if (filter.ToLower() == "to")
-                                {
-                                    Console.WriteLine("Enter a date:");
-                                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime endTime))
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.Yellow;
-                                        Console.WriteLine("Enter a valid starting time");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        continue;
-                                    }
-                                    else
-                                    {
-                                        tempMeetings = tempMeetings.Where(x => x.EndDate < endTime).ToList();
-                                    }
-                                }
-                                else if (filter.ToLower() == "between") { 
-                                    Console.WriteLine("Enter a starting date:");
-                                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime startTime))
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.Yellow;
-                                        Console.WriteLine("Enter a valid starting time");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        continue;
-                                    }
-                                    else
-                                    {
-                                        tempMeetings = tempMeetings.Where(x => x.StartDate > startTime).ToList();
-                                    }
-                                    Console.WriteLine("Enter an ending date:");
-                                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime endTime))
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.Yellow;
-                                        Console.WriteLine("Enter a valid starting time");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        continue;
-                                    }
-                                    else
-                                    {
-                                        tempMeetings = tempMeetings.Where(x => x.EndDate < endTime).ToList();
-                                    }
-                                }
-                                else if (filter.ToLower() == "peoplecount" || filter.ToLower() == "count")
-                                {
-                                    Console.WriteLine("Enter a number from which to filter: ");
-                                    if (!Int32.TryParse(Console.ReadLine(), out int count))
-                                    {
-                                        Console.ForegroundColor = ConsoleColor.Yellow;
-                                        Console.WriteLine("count should be an integer!");
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        continue;
-                                    }
-                                    else
-                                    {
-                                        tempMeetings = tempMeetings.Where(x => x.People.Count >= count).ToList();
-                                    }
-                                }
-                                else
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Yellow;
-                                    Console.WriteLine("Please enter a valid filter");
-                                    Console.ForegroundColor = ConsoleColor.White;
-                                    continue;
-                                }
-
-                                Console.WriteLine("\nFiltered Meetings:\n");
-                                foreach(var meeting in tempMeetings)
-                                {
-                                    Console.WriteLine(meeting.ToString());
-                                    Console.WriteLine();
-                                }
-
-                                Console.WriteLine("Would you like to add a new filter? (Y/N)");
-                               
-                                
-                                var response = Console.ReadLine();
-                                if(response == "")
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine("Aborting command");
-                                    Console.ForegroundColor = ConsoleColor.White;
-                                    break;
-                                }
-                                else if(response.ToLower() == "y" || response.ToLower() == "yes")
-                                {
-                                    continue;
-                                }else
-                                {
-                                    break;
-                                }
-                            }
+                            CommandUtilities.RunFilteringMeetingsCommand(meetings, people);
+                            
                             continue;
                         }
                     }
                     else if (tokens.Length == 3)
                     {
+                        // check for create new meeting command
                         if ((tokens[0].ToLower() == "add"
                             || tokens[0].ToLower() == "create")
                             && tokens[1].ToLower() == "new"
@@ -311,6 +109,7 @@ namespace ConsoleUI
 
                             continue;
                         }
+                        // check for get * people command
                         if (tokens[0].ToLower() == "get"
                             && tokens[1] == "*"
                             && tokens[2].ToLower() == "people"
@@ -322,6 +121,7 @@ namespace ConsoleUI
                             }
                             continue;
                         }
+                        // check for get * meetings command
                         if (tokens[0].ToLower() == "get"
                             && tokens[1] == "*"
                             && tokens[2].ToLower() == "meetings"
@@ -334,225 +134,37 @@ namespace ConsoleUI
                             }
                             continue;
                         }
+                        // check for delete meeting {id} command
                         if (tokens[0].ToLower() == "delete"
                             && tokens[1].ToLower() == "meeting")
                         {
-                            if (!Int32.TryParse(tokens[2], out int id))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("id should be an integer: DELETE meeting {id}");
-                                Console.WriteLine("Aborting command");
-                                Console.ForegroundColor = ConsoleColor.White;
-                                continue;
-                            }
-
-                            var index = MeetingUtilities.GetMeetingIndex(meetings, id);
-                            if (index == -1)
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Meeting with given index does not exist");
-                                Console.WriteLine("Aborting command");
-                                Console.ForegroundColor = ConsoleColor.White;
-                                continue;
-                            }
-                            if (!MeetingUtilities.UserCanDeleteMeeting(meetings, index, LoginPerson))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("User {0} does not have permissions to delete meeting with index {1}",LoginPerson.Username,id);
-                                Console.WriteLine("Aborting command");
-                                Console.ForegroundColor = ConsoleColor.White;
-                                continue;
-                            }
-                            if(MeetingUtilities.DeleteMeeting(meetings, MEETINGSPATH, id))
-                            {
-                                log.LogInformation("Meeting with id: {meeting_id} has been deleted sucessfully", id);
-                            }
-                            else
-                            {
-                                log.LogInformation("Meeting with id: {meeting_id} could not be deleted", id);
-                            }
+                            CommandUtilities.RunDeleteMeetingCommand(meetings, tokens[2], LoginPerson, log, config);
                             continue;
                         }
-                    }else if(tokens.Length == 6)
-                    {
-                        if ((tokens[0].ToLower() == "delete"
-                            || tokens[0].ToLower() == "remove")
-                          && tokens[1].ToLower() == "person"
-                          && tokens[3].ToLower() == "from"
+                    }
+                    else if(tokens.Length == 6)
+                    {   
+                        // check for remove person {person_id} from meeting {meeting_id} command
+                        if ((tokens[0].ToLower() == "delete" || tokens[0].ToLower() == "remove")
+                          && tokens[1].ToLower() == "person" && tokens[3].ToLower() == "from"
                           && tokens[4].ToLower() == "meeting")
                         {
-                            if (!Int32.TryParse(tokens[2], out int personId))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("{person_id} should be an integer");
-                                Console.WriteLine("Aborting command");
-                                Console.ForegroundColor = ConsoleColor.White;
-                                continue;
-                            }
-                            if (!Int32.TryParse(tokens[5], out int meetingId))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("{meeting_id} should be an integer");
-                                Console.WriteLine("Aborting command");
-                                Console.ForegroundColor = ConsoleColor.White;
-                                continue;
-                            }
-                            if (!PersonUtilities.PersonExists(people, personId))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Person with id: {0} doesn't exist", personId);
-                                Console.WriteLine("Aborting command");
-                                Console.ForegroundColor = ConsoleColor.White;
-                                continue;
-                            }
-                            if (!MeetingUtilities.MeetingExists(meetings, meetingId))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Meeting with id: {0} doesn't exist", meetingId);
-                                Console.WriteLine("Aborting command");
-                                Console.ForegroundColor = ConsoleColor.White;
-                                continue;
-                            }
-                            var meeting = MeetingUtilities.GetMeeting(meetings, meetingId);
-                            var person = PersonUtilities.FindPerson(people, personId);
-                            if (!MeetingUtilities.PersonIsAlreadyInAMeeting(meeting, person))
-                            {
-
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Person with id: {0} is not in a Meeting" +
-                                    " with id: {1}", personId, meetingId);
-                                Console.WriteLine("Aborting command");
-                                Console.ForegroundColor = ConsoleColor.White;
-                                continue;
-                            }
-                            if(MeetingUtilities.PersonIsAResponsiblePerson(meeting, person))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Person with id: {0} is a responsible person for meeting" +
-                                    " with id: {1}", personId, meetingId);
-                                Console.WriteLine("Aborting command");
-                                Console.ForegroundColor = ConsoleColor.White;
-                                continue;
-                            }
-
-                            if (MeetingUtilities.DeletePersonFromAMeeting(meeting, person))
-                            {
-                                log.LogInformation("Person {person_id} has been removed from {meeting_id}", personId, meetingId);
-                                try
-                                {
-                                    MeetingUtilities.SaveAllMeetings(meetings, MEETINGSPATH);
-                                    log.LogInformation("Persons {person_id} deletion from meeting {meeting_id} has been saved to file",
-                                    personId, meetingId);
-                                }
-                                catch (Exception)
-                                {
-                                    log.LogWarning("Persons {person_id} deletion from {meeting_id} could not be saved to file",
-                                    personId, meetingId);
-                                    continue;
-                                }
-                            }
-                            else
-                            {
-                                log.LogWarning("Person {person_id} could not be removed from {meeting_id}", personId, meetingId);
-                            }
+                            CommandUtilities.RunDeletePersonFromMeetingCommand(tokens[2], tokens[5], people,
+                                meetings, log, config);
                             continue;
                         }
-                        ////////////////////////////////////////////////////////
-                            if (tokens[0].ToLower() == "add" 
-                            && tokens[1].ToLower() =="person"
-                            && tokens[3].ToLower() =="to"
-                            && tokens[4].ToLower() == "meeting")
+                        // check fo rthe add person {person_id} to meeting {meeting_id} command
+                        if (tokens[0].ToLower() == "add" && tokens[1].ToLower() =="person"
+                            && tokens[3].ToLower() =="to" && tokens[4].ToLower() == "meeting")
                         {
-                            if (!Int32.TryParse(tokens[2], out int personId))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("{person_id} should be an integer");
-                                Console.WriteLine("Aborting command");
-                                Console.ForegroundColor = ConsoleColor.White;
-                                continue;
-                            }
-                            if (!Int32.TryParse(tokens[5], out int meetingId))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("{meeting_id} should be an integer");
-                                Console.WriteLine("Aborting command");
-                                Console.ForegroundColor = ConsoleColor.White;
-                                continue;
-                            }
-                            if (!PersonUtilities.PersonExists(people, personId))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Person with id: {0} doesn't exist", personId);
-                                Console.WriteLine("Aborting command");
-                                Console.ForegroundColor = ConsoleColor.White;
-                                continue;
-                            }
-                            if (!MeetingUtilities.MeetingExists(meetings, meetingId))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Meeting with id: {0} doesn't exist", meetingId);
-                                Console.WriteLine("Aborting command");
-                                Console.ForegroundColor = ConsoleColor.White;
-                                continue;
-                            }
-                            var meeting = MeetingUtilities.GetMeeting(meetings, meetingId);
-                            var person = PersonUtilities.FindPerson(people, personId);
-                            if (MeetingUtilities.PersonIsAlreadyInAMeeting(meeting, person))
-                            {
-
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("Person with id: {0} is already in a Meeting" +
-                                    " with id: {1} doesn't exist", personId,meetingId);
-                                Console.WriteLine("Aborting command");
-                                Console.ForegroundColor = ConsoleColor.White;
-                                continue;
-                            }
-                            if (MeetingUtilities.PersonIsBusy(person, meetings, meeting))
-                            {
-                                Console.ForegroundColor = ConsoleColor.Yellow;
-                                Console.WriteLine("Person is already in a meeting at given time");
-                                Console.WriteLine("Are you sure you want to add person {0} to a meeting {1}? (Y/N)", personId, meetingId);
-                                Console.ForegroundColor = ConsoleColor.White;
-                                string answer = Console.ReadLine().ToLower();
-                                if (answer != "y" || answer != "yes")
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine("Aborting command");
-                                    Console.ForegroundColor = ConsoleColor.White;
-                                    continue;
-                                }
-                            }
-
-                            if (MeetingUtilities.AddPersonToAMeeting(meeting, person))
-                            {
-                                log.LogInformation("Person with id {person_id} has been added to a meeting with id {meeting_id}",
-                                    personId, meetingId);
-                                try
-                                {
-                                    MeetingUtilities.SaveAllMeetings(meetings, MEETINGSPATH);
-                                    log.LogInformation("Person with id {person_id} addition to {meeting_id} has been saved to file",
-                                    personId, meetingId);
-                                }
-                                catch (Exception)
-                                {
-                                    log.LogWarning("Person with id {person_id} addition to {meeting_id} could not be saved to file",
-                                    personId, meetingId);
-                                    continue;
-                                }
-                            }else
-                            {
-                                log.LogInformation("Person with id {person_id} could not be added to a meeting with id {meeting_id}",
-                                    personId, meetingId);
-                            }
+                            CommandUtilities.RunAddPersonToMeetingCommand(tokens[2], tokens[5], people,
+                                meetings, log, config);
                             continue;
                         }
                     }
 
                     // If no command was found
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Command not found write -h or help for all available commands");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    
+                    ConsoleUtilities.PrintErrorToConsole("Command not found write -h or help for all available commands");
                 }
             }
         }

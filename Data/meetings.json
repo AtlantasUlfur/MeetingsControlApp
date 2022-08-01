@@ -1,52 +1,5 @@
 [
   {
-    "ID": 0,
-    "Name": "name1",
-    "ResponsiblePerson": {
-      "Id": 0,
-      "Name": "name1",
-      "Surname": "surname1",
-      "Username": "username1",
-      "Password": "7EXazJ1yHp+l1DIOxMelDbn636o=",
-      "Salt": "tVRvT8Jqrxc=",
-      "Iterations": "AAAAFA=="
-    },
-    "Description": "description",
-    "Category": 1,
-    "Type": 0,
-    "People": [
-      {
-        "Id": 0,
-        "Name": "name1",
-        "Surname": "surname1",
-        "Username": "username1",
-        "Password": "7EXazJ1yHp+l1DIOxMelDbn636o=",
-        "Salt": "tVRvT8Jqrxc=",
-        "Iterations": "AAAAFA=="
-      },
-      {
-        "Id": 1,
-        "Name": "name2",
-        "Surname": "surname2",
-        "Username": "username2",
-        "Password": "IcpONxXdhCb/j/LFYFU2rHPTi8E=",
-        "Salt": "rhZwpa2c30c=",
-        "Iterations": "AAAAFA=="
-      },
-      {
-        "Id": 2,
-        "Name": "name3",
-        "Surname": "surname3",
-        "Username": "username3",
-        "Password": "JEOzXoXErISNeiKapIYIFxp0izY=",
-        "Salt": "gIAxNAuzNyI=",
-        "Iterations": "AAAAFA=="
-      }
-    ],
-    "StartDate": "2022-02-02T00:00:00",
-    "EndDate": "2022-02-02T12:00:00"
-  },
-  {
     "ID": 1,
     "Name": "name2",
     "ResponsiblePerson": {
@@ -98,6 +51,24 @@
         "Username": "username3",
         "Password": "JEOzXoXErISNeiKapIYIFxp0izY=",
         "Salt": "gIAxNAuzNyI=",
+        "Iterations": "AAAAFA=="
+      },
+      {
+        "Id": 3,
+        "Name": "name4",
+        "Surname": "surname4",
+        "Username": "username4",
+        "Password": "JK+Eim7STnccKlDlc2yuutrKCN4=",
+        "Salt": "yzYVz/snSSU=",
+        "Iterations": "AAAAFA=="
+      },
+      {
+        "Id": 0,
+        "Name": "name1",
+        "Surname": "surname1",
+        "Username": "username1",
+        "Password": "7EXazJ1yHp+l1DIOxMelDbn636o=",
+        "Salt": "tVRvT8Jqrxc=",
         "Iterations": "AAAAFA=="
       }
     ],

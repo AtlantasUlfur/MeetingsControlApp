@@ -13,7 +13,7 @@ namespace ConsoleUI
         /// </summary>
         /// <param name="output"> The text to output to console </param>
         /// <param name="outputColor"> Color of the text </param>
-        public static void printColoredText(string output, ConsoleColor outputColor)
+        public static void PrintColoredText(string output, ConsoleColor outputColor)
         {
             ConsoleColor originalColor = Console.ForegroundColor;
             Console.ForegroundColor = outputColor;
@@ -26,7 +26,7 @@ namespace ConsoleUI
         /// </summary>
         /// <param name="output"> string lines to output to console </param>
         /// <param name="outputColor"> Color of the text </param>
-        public static void printColoredText(string[] output, ConsoleColor outputColor)
+        public static void PrintColoredText(string[] output, ConsoleColor outputColor)
         {
             ConsoleColor originalColor = Console.ForegroundColor;
             Console.ForegroundColor = outputColor;
@@ -41,36 +41,37 @@ namespace ConsoleUI
         /// </summary>
         /// <param name="output">The line to print</param>
         /// <seealso cref="System.String"> </seealso>
-        public static void printWarningToConsole(string output)
+        public static void PrintWarningToConsole(string output)
         {
-            printColoredText(output, ConsoleColor.Yellow);
+            PrintColoredText(output, ConsoleColor.Yellow);
         }
         /// <summary>
         /// Prints a yellow line for each element of the array to the console
         /// </summary>
         /// <param name="output">The line to print</param>
         /// <seealso cref="System.String"> </seealso>
-        public static void printWarningToConsole(string[] output)
+        public static void PrintWarningToConsole(string[] output)
         {
-            printColoredText(output, ConsoleColor.Yellow);
+            PrintColoredText(output, ConsoleColor.Yellow);
         }
         /// <summary>
         /// Prints a red text to console
         /// </summary>
         /// <param name="output">The line to print</param>
         /// <seealso cref="System.String"> </seealso>
-        public static void printErrorToConsole(string output)
+        public static void PrintErrorToConsole(string output)
         {
-            printColoredText(output, ConsoleColor.Red);
+            PrintColoredText(output, ConsoleColor.Red);
         }
         /// <summary>
         /// Prints a red line for each element of the array to the console
         /// </summary>
         /// <param name="output">The line to print</param>
         /// <seealso cref="System.String"> </seealso>
-        public static void printErrorToConsole(string[] output)
+        public static void PrintErrorToConsole(string[] output)
         {
-            printColoredText(output, ConsoleColor.Red);
+            PrintColoredText(output, ConsoleColor.Red);
         }
+
     }
 }
