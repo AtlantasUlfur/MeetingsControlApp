@@ -7,7 +7,7 @@ This is a console application to control meetings of your company
 
 set "People_file" and "Meetings_file" in appsettings.json file to existing .json files on your local machine.
 
-compile and run the file
+compile and run the program
 
 ### Available commands
 
@@ -59,7 +59,15 @@ Input parameters:
 Removes person from a meeting
 
 ```http request
-[DELETE/REMOVE] person {person_id} FROM meeting {meeting_id}
+FILTER meetings
 ```
 
 Prompts to add a filter to show meetings
+
+## Still needed:
+
+- A lot of refactoring
+- Adding comments for methods
+- Architecture overhaul
+- Error handling improvements
+- etc..
