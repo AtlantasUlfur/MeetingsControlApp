@@ -66,8 +66,10 @@ Prompts to add a filter to show meetings
 
 ## Still needed:
 
+- Unit testing
 - A lot of refactoring
 - Adding comments for methods
 - Architecture overhaul
 - Error handling improvements
+- Code culture improvement
 - etc..
