@@ -52,5 +52,14 @@
     "Password": "5z2Mt6iKgmCeQTRl+VbQIaAdAuE=",
     "Salt": "i/f+z0rptXI=",
     "Iterations": "AAAAFA=="
+  },
+  {
+    "Id": 6,
+    "Name": "test",
+    "Surname": "test",
+    "Username": "test",
+    "Password": "Vs43mGnpERfoW+QJt0Lpz3nMBZ4=",
+    "Salt": "K7n/ZodkSoE=",
+    "Iterations": "AAAAFA=="
   }
 ]

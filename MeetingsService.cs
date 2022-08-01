@@ -20,31 +20,6 @@ namespace ConsoleUI
             this.log = log;
             this.config = config;
         }
-        public static void LoginLoop(List<Person> people, out Person LoginPerson)
-        {
-            while (true)
-            {
-                Console.WriteLine("Enter your username");
-                var username = Console.ReadLine();
-                Console.WriteLine("Enter your password");
-                var password = Console.ReadLine();
-
-                var passwordMatches = PersonUtilities.CheckPassword(people, username, password);
-
-                if (passwordMatches)
-                {
-                    LoginPerson = PersonUtilities.GetPersonByUsername(people, username);
-                    break;
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Password or username doesnt match");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-
-            }
-        }
 
         public async void Run()
         {
@@ -52,98 +27,17 @@ namespace ConsoleUI
             string MEETINGSPATH = config["Meetings_file"];
 
             // Load all people into a list
-            Person LoginPerson;
             var people = PersonUtilities.GetAllPeople(PEOPLEPATH);
             log.LogInformation("All registered people have been loaded");
+
             // Load all meetings into a list
             var meetings = MeetingUtilities.GetAllMeetings(MEETINGSPATH);
             log.LogInformation("All registered meetings have been loaded");
 
             //Login or register prompt
-            while (true)
-            {
-                Console.WriteLine("Write Login to login or Register to register");
+            CommandUtilities.LoginOrRegisterLoop(people, out Person LoginPerson, log, config);
 
-                var prompt = Console.ReadLine();
-                if(prompt.ToLower() == "login")
-                {
-                    LoginLoop(people, out LoginPerson);
-                    break;
-                }
-                else if(prompt.ToLower() == "register")
-                {
-                    Console.WriteLine("Enter your first name");
-                    string name = Console.ReadLine();
-                    if(name == "")
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("No name entered");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        continue;
-                    }
-                    Console.WriteLine("Enter your last name");
-                    string surname = Console.ReadLine();
-                    if (surname == "")
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("No last name entered");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        continue;
-                    }
-
-                    Console.WriteLine("Enter your desired username");
-                    string username = Console.ReadLine();
-                    if (username == "")
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("No name entered");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        continue;
-                    }
-                    if (!PersonUtilities.UsernameIsUnique(people, username))
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Username must be unique");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        continue;
-                    }
-                    Console.WriteLine("Enter your password");
-                    string password = Console.ReadLine();
-                    if (password == "")
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("No name entered");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        continue;
-                    }
-                    if(PersonUtilities.AddPerson(people, name, surname, username, password))
-                    {
-                        log.LogInformation("A new person has been created");
-                    }else
-                    {
-                        log.LogWarning("Creation of a new person has failed");
-                    }
-
-                    try{
-                        PersonUtilities.SaveAllPeople(people, PEOPLEPATH);
-                        log.LogInformation("Newly created person has been saved to file");
-                    }catch (Exception)
-                    {
-                        log.LogWarning("Creation of a new person was not saved to file");
-                    }
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Enter login or register");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    continue;
-                }
-            }
-
-            // Login loop
-            
-
+            // logic loop
             while (true)
             {
                 Console.Write(LoginPerson.Username+"> ");
