@@ -15,7 +15,7 @@ compile and run the program
 -h
 ```
 Shows all available commands
------
+
 ```http request
 GET * people
 ```

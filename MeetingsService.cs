@@ -153,55 +153,164 @@ namespace ConsoleUI
                                 if(filter.ToLower() == "description" || filter.ToLower() == "desc")
                                 {
                                     Console.WriteLine("Add description filter:");
+                                    var description_filter = Console.ReadLine();
+                                    tempMeetings = tempMeetings.Where(x => x.Description.Contains(description_filter)).ToList();
                                 }
-                                else if (filter.ToLower() == "responsible person")
+                                else if (filter.ToLower() == "responsible person" || filter.ToLower() == "resp.person")
                                 {
                                     Console.WriteLine("enter the id of responsible person");
+                                    if (!Int32.TryParse(Console.ReadLine(), out int responsible_person_id))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Yellow;
+                                        Console.WriteLine("id should be an integer!");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        if (PersonUtilities.findPerson(people, responsible_person_id) == null)
+                                        {
+                                            Console.ForegroundColor = ConsoleColor.Yellow;
+                                            Console.WriteLine("person with id: {0} doesn't exist", responsible_person_id);
+                                            Console.ForegroundColor = ConsoleColor.White;
+                                            continue;
+                                        }
+                                        else
+                                        {
+                                            tempMeetings = tempMeetings.Where(x => x.ResponsiblePerson.Id == responsible_person_id).ToList();
+                                        }
+                                    }
                                 }
                                 else if (filter.ToLower() == "category")
                                 {
                                     Console.WriteLine("enter a category (CodeMonkey / Hub / Short / TeamBuilding):");
+                                    
+                                    if (!Enum.TryParse<Category>(Console.ReadLine(), true, out Category category))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Yellow;
+                                        Console.WriteLine("Enter a valid category");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                    }else
+                                    {
+                                        tempMeetings = tempMeetings.Where(x => x.Category == category).ToList();
+                                    }
+
                                 }
                                 else if (filter.ToLower() == "type")
                                 {
-                                    Console.WriteLine("enter a type (Live / InPerson)");
+                                    Console.WriteLine("enter a type (Live / InPerson):");
+                                    if (!Enum.TryParse<VismaEntry.Type>(Console.ReadLine(), true, out VismaEntry.Type type))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Yellow;
+                                        Console.WriteLine("Enter a valid type");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        tempMeetings = tempMeetings.Where(x => x.Type == type).ToList();
+                                    }
                                 }
                                 else if(filter.ToLower() == "from")
                                 {
                                     Console.WriteLine("Enter a date:");
+                                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime startTime))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Yellow;
+                                        Console.WriteLine("Enter a valid starting time");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        continue;
+                                    }else
+                                    {
+                                        tempMeetings = tempMeetings.Where(x => x.StartDate > startTime).ToList();
+                                    }
                                 }
                                 else if (filter.ToLower() == "to")
                                 {
                                     Console.WriteLine("Enter a date:");
+                                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime endTime))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Yellow;
+                                        Console.WriteLine("Enter a valid starting time");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        tempMeetings = tempMeetings.Where(x => x.EndDate < endTime).ToList();
+                                    }
                                 }
                                 else if (filter.ToLower() == "between") { 
                                     Console.WriteLine("Enter a starting date:");
+                                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime startTime))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Yellow;
+                                        Console.WriteLine("Enter a valid starting time");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        tempMeetings = tempMeetings.Where(x => x.StartDate > startTime).ToList();
+                                    }
                                     Console.WriteLine("Enter an ending date:");
+                                    if (!DateTime.TryParse(Console.ReadLine(), out DateTime endTime))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Yellow;
+                                        Console.WriteLine("Enter a valid starting time");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        tempMeetings = tempMeetings.Where(x => x.EndDate < endTime).ToList();
+                                    }
                                 }
                                 else if (filter.ToLower() == "peoplecount" || filter.ToLower() == "count")
                                 {
                                     Console.WriteLine("Enter a number from which to filter: ");
-                                }else
+                                    if (!Int32.TryParse(Console.ReadLine(), out int count))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Yellow;
+                                        Console.WriteLine("count should be an integer!");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        tempMeetings = tempMeetings.Where(x => x.People.Count >= count).ToList();
+                                    }
+                                }
+                                else
                                 {
                                     Console.ForegroundColor = ConsoleColor.Yellow;
                                     Console.WriteLine("Please enter a valid filter");
                                     Console.ForegroundColor = ConsoleColor.White;
+                                    continue;
                                 }
 
-                                Console.WriteLine();
-                                Console.WriteLine("data");
-                                Console.WriteLine();
+                                Console.WriteLine("\nFiltered Meetings:\n");
+                                foreach(var meeting in tempMeetings)
+                                {
+                                    Console.WriteLine(meeting.ToString());
+                                    Console.WriteLine();
+                                }
 
                                 Console.WriteLine("Would you like to add a new filter? (Y/N)");
+                               
+                                
                                 var response = Console.ReadLine();
-                                if(response == null)
+                                if(response == "")
                                 {
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.WriteLine("Aborting command");
                                     Console.ForegroundColor = ConsoleColor.White;
-                                    continue;
+                                    break;
                                 }
-                                else if(response.ToLower() is not "y" or not "yes")
+                                else if(response.ToLower() == "y" || response.ToLower() == "yes")
+                                {
+                                    continue;
+                                }else
                                 {
                                     break;
                                 }
