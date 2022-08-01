@@ -115,6 +115,12 @@ namespace ConsoleUI
                            "{person_id} - integer\n" +
                            "{meeting_id} - integer\n");
 
+                        Console.WriteLine("\"[DELETE/REMOVE] person {person_id} FROM meeting {meeting_id}\"" +
+                          "\n" +
+                          "Deletes a meeting with a given id from database\n" +
+                          "{person_id} - integer\n" +
+                          "{meeting_id} - integer\n");
+
                         Console.ForegroundColor = ConsoleColor.White;
                         continue;
                     }
@@ -208,7 +214,8 @@ namespace ConsoleUI
                         }
                     }else if(tokens.Length == 6)
                     {
-                        if (tokens[0].ToLower() == "delete"
+                        if ((tokens[0].ToLower() == "delete"
+                            || tokens[0].ToLower() == "remove")
                           && tokens[1].ToLower() == "person"
                           && tokens[3].ToLower() == "from"
                           && tokens[4].ToLower() == "meeting")
@@ -229,6 +236,65 @@ namespace ConsoleUI
                                 Console.ForegroundColor = ConsoleColor.White;
                                 continue;
                             }
+                            if (!PersonUtilities.personExists(people, personId))
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Person with id: {0} doesn't exist", personId);
+                                Console.WriteLine("Aborting command");
+                                Console.ForegroundColor = ConsoleColor.White;
+                                continue;
+                            }
+                            if (!MeetingUtilities.MeetingExists(meetings, meetingId))
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Meeting with id: {0} doesn't exist", meetingId);
+                                Console.WriteLine("Aborting command");
+                                Console.ForegroundColor = ConsoleColor.White;
+                                continue;
+                            }
+                            var meeting = MeetingUtilities.GetMeeting(meetings, meetingId);
+                            var person = PersonUtilities.findPerson(people, personId);
+                            if (!MeetingUtilities.PersonIsAlreadyInAMeeting(meeting, person))
+                            {
+
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Person with id: {0} is not in a Meeting" +
+                                    " with id: {1}", personId, meetingId);
+                                Console.WriteLine("Aborting command");
+                                Console.ForegroundColor = ConsoleColor.White;
+                                continue;
+                            }
+                            if(MeetingUtilities.PersonIsAResponsiblePerson(meeting, person))
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Person with id: {0} is a responsible person for meeting" +
+                                    " with id: {1}", personId, meetingId);
+                                Console.WriteLine("Aborting command");
+                                Console.ForegroundColor = ConsoleColor.White;
+                                continue;
+                            }
+
+                            if (MeetingUtilities.DeletePersonFromAMeeting(meeting, person))
+                            {
+                                log.LogInformation("Person {person_id} has been removed from {meeting_id}", personId, meetingId);
+                                try
+                                {
+                                    MeetingUtilities.SaveAllMeetings(meetings, MEETINGSPATH);
+                                    log.LogInformation("Persons {person_id} deletion from meeting {meeting_id} has been saved to file",
+                                    personId, meetingId);
+                                }
+                                catch (Exception)
+                                {
+                                    log.LogWarning("Persons {person_id} deletion from {meeting_id} could not be saved to file",
+                                    personId, meetingId);
+                                    continue;
+                                }
+                            }
+                            else
+                            {
+                                log.LogWarning("Person {person_id} could not be removed from {meeting_id}", personId, meetingId);
+                            }
+                            continue;
                         }
                         ////////////////////////////////////////////////////////
                             if (tokens[0].ToLower() == "add" 

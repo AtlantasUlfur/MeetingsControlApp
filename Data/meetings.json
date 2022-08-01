@@ -6,10 +6,10 @@
       "Id": 0,
       "Name": "name1",
       "Surname": "surname1",
-      "username": "username1",
-      "password": "7EXazJ1yHp+l1DIOxMelDbn636o=",
-      "salt": "tVRvT8Jqrxc=",
-      "iterations": "AAAAFA=="
+      "Username": "username1",
+      "Password": "7EXazJ1yHp+l1DIOxMelDbn636o=",
+      "Salt": "tVRvT8Jqrxc=",
+      "Iterations": "AAAAFA=="
     },
     "Description": "description",
     "Category": 1,
@@ -19,28 +19,28 @@
         "Id": 0,
         "Name": "name1",
         "Surname": "surname1",
-        "username": "username1",
-        "password": "7EXazJ1yHp+l1DIOxMelDbn636o=",
-        "salt": "tVRvT8Jqrxc=",
-        "iterations": "AAAAFA=="
+        "Username": "username1",
+        "Password": "7EXazJ1yHp+l1DIOxMelDbn636o=",
+        "Salt": "tVRvT8Jqrxc=",
+        "Iterations": "AAAAFA=="
       },
       {
         "Id": 1,
         "Name": "name2",
         "Surname": "surname2",
-        "username": "username2",
-        "password": "IcpONxXdhCb/j/LFYFU2rHPTi8E=",
-        "salt": "rhZwpa2c30c=",
-        "iterations": "AAAAFA=="
+        "Username": "username2",
+        "Password": "IcpONxXdhCb/j/LFYFU2rHPTi8E=",
+        "Salt": "rhZwpa2c30c=",
+        "Iterations": "AAAAFA=="
       },
       {
         "Id": 2,
         "Name": "name3",
         "Surname": "surname3",
-        "username": "username3",
-        "password": "JEOzXoXErISNeiKapIYIFxp0izY=",
-        "salt": "gIAxNAuzNyI=",
-        "iterations": "AAAAFA=="
+        "Username": "username3",
+        "Password": "JEOzXoXErISNeiKapIYIFxp0izY=",
+        "Salt": "gIAxNAuzNyI=",
+        "Iterations": "AAAAFA=="
       }
     ],
     "StartDate": "2022-02-02T00:00:00",
@@ -53,10 +53,10 @@
       "Id": 1,
       "Name": "name2",
       "Surname": "surname2",
-      "username": "username2",
-      "password": "IcpONxXdhCb/j/LFYFU2rHPTi8E=",
-      "salt": "rhZwpa2c30c=",
-      "iterations": "AAAAFA=="
+      "Username": "username2",
+      "Password": "IcpONxXdhCb/j/LFYFU2rHPTi8E=",
+      "Salt": "rhZwpa2c30c=",
+      "Iterations": "AAAAFA=="
     },
     "Description": "jono .net meetas",
     "Category": 2,
@@ -66,10 +66,10 @@
         "Id": 1,
         "Name": "name2",
         "Surname": "surname2",
-        "username": "username2",
-        "password": "IcpONxXdhCb/j/LFYFU2rHPTi8E=",
-        "salt": "rhZwpa2c30c=",
-        "iterations": "AAAAFA=="
+        "Username": "username2",
+        "Password": "IcpONxXdhCb/j/LFYFU2rHPTi8E=",
+        "Salt": "rhZwpa2c30c=",
+        "Iterations": "AAAAFA=="
       }
     ],
     "StartDate": "2022-03-03T00:00:00",
@@ -82,10 +82,10 @@
       "Id": 2,
       "Name": "name3",
       "Surname": "surname3",
-      "username": "username3",
-      "password": "JEOzXoXErISNeiKapIYIFxp0izY=",
-      "salt": "gIAxNAuzNyI=",
-      "iterations": "AAAAFA=="
+      "Username": "username3",
+      "Password": "JEOzXoXErISNeiKapIYIFxp0izY=",
+      "Salt": "gIAxNAuzNyI=",
+      "Iterations": "AAAAFA=="
     },
     "Description": "petro .net meetas",
     "Category": 1,
@@ -95,10 +95,10 @@
         "Id": 2,
         "Name": "name3",
         "Surname": "surname3",
-        "username": "username3",
-        "password": "JEOzXoXErISNeiKapIYIFxp0izY=",
-        "salt": "gIAxNAuzNyI=",
-        "iterations": "AAAAFA=="
+        "Username": "username3",
+        "Password": "JEOzXoXErISNeiKapIYIFxp0izY=",
+        "Salt": "gIAxNAuzNyI=",
+        "Iterations": "AAAAFA=="
       }
     ],
     "StartDate": "2022-03-03T00:00:00",

@@ -49,3 +49,11 @@ Input parameters:
 
 Adds a person to a meeting
 
+```http request
+[DELETE/REMOVE] person {person_id} FROM meeting {meeting_id}
+```
+Input parameters:
+`person_id` - integer
+`meeting_id` - integer
+
+Removes person from a meeting

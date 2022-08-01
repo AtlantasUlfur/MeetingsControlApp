@@ -172,7 +172,21 @@ namespace ConsoleUI
             }
             return false;
         }
-
+        public static bool PersonIsAResponsiblePerson(Meeting meeting, Person person)
+        {
+            return (meeting.ResponsiblePerson.Id == person.Id);
+        }
+        public static bool DeletePersonFromAMeeting(Meeting meeting, Person person)
+        {
+            try {
+                meeting.People.Remove(person);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         public static bool PersonIsAlreadyInAMeeting(Meeting meeting, Person person)
         {
             // Check if the persons id is already in the meetings people list
