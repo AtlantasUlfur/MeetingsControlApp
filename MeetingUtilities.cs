@@ -176,7 +176,7 @@ namespace ConsoleUI
         public static bool DeletePersonFromAMeeting(Meeting meeting, Person person)
         {
             try {
-                meeting.People.Remove(person);
+                meeting.People.RemoveAt(meeting.People.FindIndex(x => x.Id == person.Id));
                 return true;
             }
             catch (Exception)
