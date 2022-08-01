@@ -67,5 +67,17 @@ namespace VismaEntry
         {
             return String.Format("ID: {0} Full Name: {1} {2}",this.Id, this.Name, this.Surname);
         }
+        public static void ResetID(List<Person> people)
+        {
+            int highest_id = -1;
+            foreach (var person in people)
+            {
+                if (highest_id < person.Id)
+                {
+                    highest_id = person.Id;
+                }
+            }
+            lastId = highest_id;
+        }
     }
 }

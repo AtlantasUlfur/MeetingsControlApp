@@ -23,13 +23,36 @@ namespace ConsoleUI
                 return new List<Person>();
             }
         }
-
+        public static bool UsernameIsUnique(List<Person> people, string username )
+        {
+            foreach(var person in people)
+            {
+                if(person.Username == username)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         public static void SaveAllPeople(List<Person> list, string path)
         {
             var json = JsonConvert.SerializeObject(list, Formatting.Indented);
             File.WriteAllText(path, json);
         }
-
+        public static bool AddPerson(List<Person> people, string name, string surname, string username, string password)
+        {
+            Person.ResetID(people);
+            try
+            {
+                people.Add(new Person(name, surname, username, password));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+           
+        }
         public static IDictionary<string, byte[]> encryptPassword(string password)
         {
             Rfc2898DeriveBytes PBKDF2 = new Rfc2898DeriveBytes(password, 8, 20);    //Hash the password with a 8 byte salt
